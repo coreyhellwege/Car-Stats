@@ -58,7 +58,7 @@ app.get('/cars/:id', (req, res) => {
 });
 
 app.get('/cars/make/:make', (req, res) => {
-    // cobject destructuring syntax:
+    // object destructuring syntax:
     const { make } = req.params;
     Car.findOne({ make })
         .then(doc => res.send(doc));     

@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import './App.css'
 import CarInfo from './CarInfo'
+import CarPics from './CarPics'
+import About from './About'
+import Cars from './Cars'
+import Car from './Car'
+import { BrowserRouter, Route } from 'react-router-dom'
+
 
 class App extends Component {
   state = {
@@ -33,7 +39,7 @@ class App extends Component {
     // This is only run when the component is removed from the DOM.
     // Generally used to clean up the state of the objecet before it's destroyed.
   }
-
+  
   shouldComponentUpdate(oldState, newState) {
     // Gives you the ability to check whether your component should be updated. Expects a true or false return.
     // console.log(oldState)
@@ -48,17 +54,43 @@ class App extends Component {
     this.setState({ selected: car })
   }
 
+  // We use .map below because it returns a new array for us to display each car. forEach won't work because it doesn't return anything.
+
   render() {
-    // const cars = this.state.cars
-    // console.log(cars)
-    console.log('App is running render')
-    return (
-      <div className="App">
-      <h1>Welcome to Car-Stats!</h1><hr/>
-        <CarInfo cars={this.state.selected} />      
-        {this.state.cars.map((car, index) => <h3 key={index} onClick={() => this.handleCarInfo(car)}>{car.make}</h3>)}
-      </div>
-    );
+    return(
+      <BrowserRouter>
+        <div>
+          <Route exact path="/" component={Cars} />
+          <Route exact path="/cars" component={Cars} />
+          <Route path="/cars/:id" component={Car} />
+          <Route path="/info" component={CarInfo} />
+          <Route path="/about/" component={About} />
+          <Route path="/pics/" component={CarPics} />
+        </div>
+      </BrowserRouter>
+    )
+    
+    // const { pathname } = window.location;
+    // const params = pathname.substr(1)
+    // // console.log(params)
+    
+    // if(params === 'home' || params === '') {
+    // return (
+    //   <div className="App">
+    //   <h1>Welcome to Car-Stats!</h1><hr/>
+    //   { this.state.cars.map((car, index) => <h3 key={index} onClick={() => this.handleCarInfo(car)}>{car.make}</h3>) }
+    //   { this.state.selected && <CarInfo cars={this.state.selected} /> }    
+    //   </div>
+    // )
+    // } else if(params === 'pics') {
+    //   // render carPics component
+    //   return <CarPics /> 
+    // } else if (params === 'about') {
+    //   // render about component
+    //   return <About />
+    // } else {
+    //   return <p>Unknown Path</p>
+    // }
   }
 }
 
